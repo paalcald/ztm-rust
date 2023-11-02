@@ -11,6 +11,7 @@
 fn add<T: std::ops::Add<Output = T>>(a: T, b: T) -> T {
     a + b
 }
+#[allow(dead_code)]
 fn sub<T: std::ops::Sub<Output = T>>(a: T, b: T) -> T {
     a - b
 }

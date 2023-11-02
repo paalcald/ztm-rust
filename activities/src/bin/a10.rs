@@ -11,5 +11,14 @@
 // * Use a function to print the messages
 // * Use a match expression to determine which message
 //   to print
-
-fn main() {}
+fn print_relating_to_100(variable: bool) {
+    match variable {
+        true => println!("its big"),
+        false => println!("its small"),
+    }
+}
+fn main() {
+    let value = 101;
+    let decided = value > 100;
+    print_relating_to_100(decided)
+}
