@@ -15,5 +15,27 @@
 // * Use `match` to print out a message for each `Adult`:
 //   * For the Ok variant, print any message you want
 //   * For the Err variant, print out the error message
-
-fn main() {}
+struct Adult {
+    name: String,
+    age: u8,
+}
+impl Adult {
+    fn new(name: String, age: u8) -> Result<Self, String> {
+        if age > 21 {
+            return Ok(Adult { name, age});
+        } else {
+            return Err(format!("Try again in {:?} years.", 21 - age));
+        }
+    }
+}
+fn main() {
+    let kid = Adult::new("kiddo".to_owned(), 10);
+    let grampa = Adult::new("aurelio".to_owned(), 80);
+    let people = vec![kid, grampa];
+    for pep in &people {
+        match pep {
+            Ok(adult) => println!("{:?} is {:?}.", adult.name, adult.age),
+            Err(msg) => println!("{:?}", msg),
+        }
+    }
+}

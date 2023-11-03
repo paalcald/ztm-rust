@@ -7,10 +7,11 @@
 // * Use a function to add two numbers together
 // * Use a function to display the result
 // * Use the "{:?}" token in the println macro to display the result
-
+/// Adds two numbers.
 fn add<T: std::ops::Add<Output = T>>(a: T, b: T) -> T {
     a + b
 }
+/// Substracts two numbers.
 #[allow(dead_code)]
 fn sub<T: std::ops::Sub<Output = T>>(a: T, b: T) -> T {
     a - b
