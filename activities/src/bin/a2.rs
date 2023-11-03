@@ -24,4 +24,3 @@ fn main() {
     let result = add(a, b);
     display_result(result);
 }
-

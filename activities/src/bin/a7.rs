@@ -14,15 +14,13 @@ enum Color {
     Rojo,
     Amarillo,
 }
-fn print_color(my_color: Color)
-{
+fn print_color(my_color: Color) {
     let out_str = match my_color {
         Color::Cian => "Cian",
         Color::Rojo => "Rojo",
         Color::Amarillo => "Amarillo",
     };
     println!("{:?}", out_str)
-
 }
 fn main() {
     let my_color = Color::Cian;

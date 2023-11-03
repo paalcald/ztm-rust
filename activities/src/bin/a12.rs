@@ -16,7 +16,7 @@ struct Dimensions {
 }
 impl Dimensions {
     fn show(&self) -> String {
-        format!("{:?}x{:?}x{:?}cm", self.length, self. width, self.height)
+        format!("{:?}x{:?}x{:?}cm", self.length, self.width, self.height)
     }
 }
 enum Color {
@@ -43,14 +43,16 @@ struct ShippingBox {
 
 impl ShippingBox {
     fn show(&self) {
-        println!("{:?} sized {:?} box weighting {:?} kg",
+        println!(
+            "{:?} sized {:?} box weighting {:?} kg",
             self.dimensions.show(),
             self.color.show(),
-            self.weight);
+            self.weight
+        );
     }
     fn small_box() -> Self {
-        Self { 
-            dimensions:  Dimensions {
+        Self {
+            dimensions: Dimensions {
                 length: 24.0,
                 width: 17.0,
                 height: 8.7,
@@ -58,7 +60,7 @@ impl ShippingBox {
             weight: 1.0,
             color: Color::Green,
         }
-    } 
+    }
 }
 fn main() {
     let small_box = ShippingBox::small_box();

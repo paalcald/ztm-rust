@@ -26,7 +26,7 @@ fn sample_fn(n: u8) -> Size {
     match n {
         0..=53 => Small,
         54..=154 => Medium,
-        155.. => Large
+        155.. => Large,
     }
 }
 
@@ -35,4 +35,4 @@ fn main() {
 }
 
 #[cfg(test)]
-mod test { }
+mod test {}

@@ -13,7 +13,7 @@ fn main() {
     let integer = 5;
     if integer > 5 {
         println!(">5");
-    } else  if integer < 5 {
+    } else if integer < 5 {
         println!("<5");
     } else {
         println!("=5");

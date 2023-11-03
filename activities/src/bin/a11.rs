@@ -19,9 +19,9 @@ fn get_quantity(item: &Item) {
     println!("quantity: {:?}", item.quantity);
 }
 fn main() {
-    let item = Item{
+    let item = Item {
         id_number: 123,
-         quantity: 10
+        quantity: 10,
     };
     get_id(&item);
     get_quantity(&item);
