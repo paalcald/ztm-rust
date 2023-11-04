@@ -19,6 +19,7 @@ impl Dimensions {
         format!("{:?}x{:?}x{:?}cm", self.length, self.width, self.height)
     }
 }
+#[allow(dead_code)]
 enum Color {
     Yellow,
     Green,

@@ -32,3 +32,16 @@ fn concat(first: &str, second: &str) -> String {
 }
 
 fn main() {}
+#[cfg(test)]
+mod test {
+    use crate::clamp;
+
+    #[test]
+    fn clamp_lt_lower_is_lower () {
+        let n = 10;
+        let lower = 12;
+        let upper = 15;
+        let out = clamp(n, lower, upper);
+        assert_eq!(out, lower, "lower must surpass output")
+    }
+}

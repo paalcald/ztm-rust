@@ -8,6 +8,7 @@
 // * Use a struct to store drink flavor and fluid ounce information
 // * Use a function to print out the drink flavor and ounces
 // * Use a match expression to print the drink flavor
+#[allow(dead_code)]
 enum Flavour {
     Orange,
     Strawberry,

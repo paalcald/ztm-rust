@@ -27,6 +27,7 @@
 //   unmodified.
 
 #[derive(Clone, Copy, Debug)]
+#[allow(dead_code)]
 enum ProtectedLocation {
     All,
     Office,
@@ -96,13 +97,14 @@ fn authorize(
     employee_name: &str,
     location: ProtectedLocation,
 ) -> Result<AuthorizationStatus, String> {
-    let employee = Database::connect()?.find_employee(employee_name)?;
-    let employee_keycard = Database::connect()?.get_keycard(&employee)?;
-        if employee_keycard.access_level > location.required_access_level() {
-            return Ok(AuthorizationStatus::Allow);
-        } else {
-            return Ok(AuthorizationStatus::Deny);
-        }
+    let db = Database::connect()?;
+    let employee = db.find_employee(employee_name)?;
+    let employee_keycard = db.get_keycard(&employee)?;
+    if employee_keycard.access_level >= location.required_access_level() {
+        Ok(AuthorizationStatus::Allow)
+    } else {
+        Ok(AuthorizationStatus::Deny)
+    }
 }
 
 fn main() {

@@ -22,7 +22,7 @@ struct Adult {
 impl Adult {
     fn new(name: String, age: u8) -> Result<Self, String> {
         if age > 21 {
-            return Ok(Adult { name, age});
+            return Ok(Adult { name, age });
         } else {
             return Err(format!("Try again in {:?} years.", 21 - age));
         }

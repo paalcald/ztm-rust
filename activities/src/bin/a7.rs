@@ -9,6 +9,7 @@
 // * The function must use the enum as a parameter
 // * Use a match expression to determine which color
 //   name to print
+#[allow(dead_code)]
 enum Color {
     Cian,
     Rojo,

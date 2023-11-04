@@ -22,5 +22,28 @@
 // * Use a match expression to convert the user input into the power state enum
 // * The program should be case-insensitive (the user should be able to type
 //   Reboot, reboot, REBOOT, etc.)
-
-fn main() {}
+#[derive(Debug)]
+#[allow(dead_code)]
+enum Command {
+    Off,
+    Sleep,
+    Reboot,
+    Shutdown,
+    Hibernate,
+}
+impl Command {
+    fn from_str(keyword: String) -> Option<Self> {
+        match keyword.to_lowercase().as_str() {
+            "off" => Some(Command::Off),
+            "sleep" => Some(Command::Sleep),
+            "reboot" => Some(Command::Reboot),
+            "shutdown" => Some(Command::Shutdown),
+            "hibernate" => Some(Command::Hibernate),
+            _ => None,
+        }
+    }
+}
+fn main() {
+    let user_input = "shutdown".to_owned();
+    Command::from_str(user_input).map(|x| println!("{:?} initiated.", x));
+}

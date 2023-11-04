@@ -15,5 +15,9 @@
 fn main() {
     let my_string = String::from("This is my string.");
 
-    println!("Uppercase: {:?}\nLowercase: {:?}", my_string.to_uppercase(), my_string.to_lowercase())
+    println!(
+        "Uppercase: {:?}\nLowercase: {:?}",
+        my_string.to_uppercase(),
+        my_string.to_lowercase()
+    )
 }
