@@ -7,5 +7,9 @@
 // * Use the `chrono` crate to work with time
 // * (OPTIONAL) Read the documentation section `Formatting and Parsing`
 //   for examples on how to create custom time formats
+use chrono::{DateTime, Local};
 
-fn main() {}
+fn main() {
+    let local: DateTime<Local> = Local::now();
+    println!("{local}");
+}

@@ -43,7 +43,13 @@ impl Command {
         }
     }
 }
+use std::io::{self, Write};
 fn main() {
-    let user_input = "shutdown".to_owned();
-    Command::from_str(user_input).map(|x| println!("{:?} initiated.", x));
+    print!("Input system command: ");
+    io::stdout().flush().expect("could not flush.");
+    let mut user_input = String::new();
+    io::stdin().read_line(&mut user_input).expect("Could not read input.");
+    user_input = user_input.trim().to_owned();
+    Command::from_str(user_input)
+        .map_or( println!("invalid power state."),|x| println!("{:?} initiated.", x));
 }

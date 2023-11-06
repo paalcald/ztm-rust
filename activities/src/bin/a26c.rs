@@ -15,33 +15,8 @@
 // * Update your Cargo.toml to include a library file
 // * After moving the functions into modules, try running
 //   `cargo check --bin a26c` to get a listing of required code changes
-
-fn trim(msg: &str) -> &str {
-    msg.trim()
-}
-
-fn capitalize(msg: &str) -> std::borrow::Cow<'_, str> {
-    if let Some(letter) = msg.get(0..1) {
-        format!("{}{}", letter.to_uppercase(), &msg[1..msg.len()]).into()
-    } else {
-        msg.into()
-    }
-}
-
-fn exciting(msg: &str) -> String {
-    format!("{}!", msg)
-}
-
-fn add(lhs: isize, rhs: isize) -> isize {
-    lhs + rhs
-}
-fn sub(lhs: isize, rhs: isize) -> isize {
-    lhs - rhs
-}
-fn mul(lhs: isize, rhs: isize) -> isize {
-    lhs * rhs
-}
-
+use external::math::{add, sub, mul};
+use external::msg::{trim, capitalize, exciting};
 fn main() {
     // Part 1: math functions
     let result = {
