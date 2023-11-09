@@ -43,11 +43,7 @@ impl Bill {
         format!("{}: {}.", self.name, self.amount)
     }
 }
-struct App {
-    name: String,
-    cli: CLI,
-    db: Database,
-}
+
 struct Database {
     bills: Vec<Bill>,
     variables: HashMap<String, String>,
@@ -64,31 +60,57 @@ impl Database {
         self.bills.push(new_bill);
     }
 
+    fn modify_bill_name(&mut self, index: usize, new_name: String) -> Result<(), Sring> {
+        if index < self.bills.len() - 1 {
+            self.bills.get_mut(index).name = new_name;
+            Ok(())
+        } else {
+            Err("Wrong input size".to_owned())
+        }
+    }
+
+    fn modify_bill_amount(&mut self, index: usize, new_amount: f64) -> Result<(), Sring> {
+        if index < self.bills.len() {
+            self.bills.get_mut(index).amount = new_amount;
+            Ok(())
+        } else {
+            Err("Wrong input size".to_owned())
+        }
+    }
+
+    fn remove_bill(&mut self, index: usize) -> Result<(), String> {
+        if index < self.bills.len() {
+            self.bills.remove(index);
+            Ok(())
+        } else {
+            Err("Wrong input size".to_owned())
+        }
+        
+    }
+
     fn get_all (&self) -> std::slice::Iter<'_, Bill> {
         self.bills.iter()
     }
 }
-#[derive(PartialEq, Eq, Hash)]
-enum CLICommand {
-    AddNewBill,
-    ViewBills,
-}
-struct CLI {
-    state: CLICommand,
-}
-impl CLI {
-    fn new(msgs: HashMap<CLICommand, String>) -> Self {
-        Self {
-            state: CLICommand::Homescreen,
-        }
+pub mod cli {
+    use std::collections::HashMap;
+    use std::io;
+    use std::io::Write;
+
+    #[derive(PartialEq, Eq, Hash)]
+    enum CLICommand {
+        AddNewBill,
+        ViewBills,
     }
-    fn change_state(&mut self, cli_state: CLICommand) {
-        self.state = cli_state;
-    }
-    fn update_interface(&self) {
+    
+    pub fn run(&) -> Optional 
+
+
+    pub fn update_interface(&self) {
         ()
     }
-    fn get_input() -> Option<String> {
+
+    pub fn get_input() -> Option<String> {
         let mut buffer = String::new();
         while io::stdin().read_line(&mut buffer).is_err() {
             print!("\nCould not read input format.\nTry again: ");

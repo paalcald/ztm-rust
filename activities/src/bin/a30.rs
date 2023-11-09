@@ -14,8 +14,69 @@
 // * Examples of colors could be red, white, black
 // * It is not necessary to have data fields or function implementations
 //   for the vehicle bodies/colors
+#[derive(Debug)]
+struct Truck;
+impl Body for Truck {
+
+}
+
+#[derive(Debug)]
+struct Car;
+impl Body for Car {
+
+}
+
+#[derive(Debug)]
+struct Scooter;
+impl Body for Scooter {
+
+}
+
+#[derive(Debug)]
+struct White;
+impl Color for White {
+
+}
+#[derive(Debug)]
+struct Red;
+impl Color for Red {
+
+}
+#[derive(Debug)]
+struct Black;
+impl Color for Black {
+
+}
+
+#[derive(Debug)]
+struct Vehicle<T, U> 
+where 
+    T: Body,
+    U: Color{
+body: T,
+color: U,
+}
+impl <B,C> Vehicle<B,C> 
+where
+    B: Body,
+    C: Color,
+{
+    fn new(body: B, color: C) -> Self {
+        Self {body, color}
+    }
+
+}
 
 trait Body {}
+
 trait Color {}
 
-fn main() {}
+fn main() {
+    let red_car = Vehicle::new(Car, Red);
+    let white_scooter = Vehicle::new(Scooter, White);
+    let black_truck = Vehicle::new(Truck, Black);
+    println!("{:?}", red_car);
+    println!("{:?}", white_scooter);
+    println!("{:?}", black_truck);
+
+}
