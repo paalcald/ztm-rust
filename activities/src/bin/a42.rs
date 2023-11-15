@@ -1,3 +1,5 @@
+use std::borrow::BorrowMut;
+
 // Topic: Implementing Iterator
 //
 // Summary:
@@ -42,8 +44,6 @@ impl Iterator for Score {
 }
 fn main() {
     let mut score = Score::new();
-    score.next();
-    score.powerup();
-    score.next();
-    println!("{}", score.multiplier);
+    score.borrow_mut().take(10).map(|x| println!("{}", x)).for_each(drop);
+    println!("final score: {}", score.multiplier);
 }
