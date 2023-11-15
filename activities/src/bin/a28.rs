@@ -9,7 +9,8 @@
 //   * Each new type should implement a `new` function
 // * Create a function for each type of clothes (shoes, shirt, pants)
 //   that accepts the new type specific to that type of clothing
-
+#[allow(dead_code)]
+#[derive(Debug)]
 enum Color {
     Black,
     Blue,
@@ -22,5 +23,36 @@ enum Color {
     White,
     Yellow,
 }
+#[derive(Debug)]
+struct Shirt(Color);
+impl Shirt {
+    pub fn new(color: Color) -> Self {
+        Self(color)
+    }
+}
 
-fn main() {}
+#[derive(Debug)]
+struct Pants(Color);
+impl Pants {
+    pub fn new(color: Color) -> Self {
+        Self(color)
+    }
+}
+
+#[derive(Debug)]
+struct Shoes(Color);
+impl Shoes {
+    pub fn new(color: Color) -> Self {
+        Self(color)
+    }
+}
+
+
+fn main() {
+    let shoes = Shoes::new(Color::Black);
+    let pants = Pants::new(Color::Blue);
+    let shirt = Shirt::new(Color::Red);
+    println!("{:?}", shoes);
+    println!("{:?}", pants);
+    println!("{:?}", shirt);
+}

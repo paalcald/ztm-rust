@@ -19,6 +19,10 @@
 
 use crossbeam_channel::{unbounded, Receiver, Sender};
 use std::collections::VecDeque;
+// std Mutex can be poissoned so this returns a Result that has to be checked
+// we .unwrap() so the panics signaling a poissoned muted 
+// (i.e. thread panicked while holding it) are propagated.
+use std::sync::{Arc, Mutex};
 use std::thread::{self, JoinHandle};
 use std::time::Duration;
 
@@ -35,6 +39,8 @@ enum Message {
     AddJob(Job),
     Quit,
 }
+
+type SharedCounter = Arc<Mutex<u16>>;
 
 struct Worker<M> {
     tx: Sender<M>,
@@ -57,7 +63,7 @@ impl Worker<Message> {
 }
 
 /// Create a new worker to receive jobs.
-fn spawn_worker() -> Worker<Message> {
+fn spawn_worker(counter: SharedCounter) -> Worker<Message> {
     let (tx, rx) = unbounded();
     // We clone the receiving end here so we have a copy to give to the
     // thread. This allows us to save the `tx` and `rx` into the Worker struct.
@@ -73,11 +79,13 @@ fn spawn_worker() -> Worker<Message> {
             // no more are available.
             loop {
                 // Get the next job.
-                for job in jobs.pop_front() {
+                while let Some(job) = jobs.pop_front() {
                     match job {
                         Job::Print(msg) => println!("{}", msg),
                         Job::Sum(lhs, rhs) => println!("{}+{}={}", lhs, rhs, lhs + rhs),
                     }
+                    let mut current = counter.lock().unwrap();
+                    *current += 1;
                 }
                 // Check for messages on the channel.
                 if let Ok(msg) = rx_thread.try_recv() {
@@ -110,6 +118,7 @@ fn spawn_worker() -> Worker<Message> {
 }
 
 fn main() {
+    let shared_counter: Arc<Mutex<u16>> = Arc::new(Mutex::new(0));
     let jobs = vec![
         Job::Print("hello".to_owned()),
         Job::Sum(2, 2),
@@ -134,7 +143,7 @@ fn main() {
     let mut workers = vec![];
     // Spawn 4 workers to process jobs.
     for _ in 0..4 {
-        let worker = spawn_worker();
+        let worker = spawn_worker(shared_counter.clone());
         workers.push(worker);
     }
 
@@ -158,6 +167,7 @@ fn main() {
     }
 
     println!("Jobs sent: {}", jobs_sent);
-
+    let jobs_completed = *shared_counter.lock().unwrap();
+    println!("Jobs completed: {}", jobs_completed);
     // print out the number of jobs completed here.
 }

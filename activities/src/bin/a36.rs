@@ -16,5 +16,11 @@ fn data() -> &'static [u64] {
 
 fn main() {
     // `stream` is an iterator of Option<&[u64]>
-    let mut stream = data().chunks(2);
+    let stream = data().chunks(2);
+    stream.map(|x| match x {
+            [a, b] => println!("{}", a + b),
+            [single] => println!("Unpaired value: {}", single),
+            [] => println!("Data stream complete"),
+            [..] => panic!("chunk size can't be greater than 2")
+    }).for_each(drop);
 }

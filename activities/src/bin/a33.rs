@@ -7,7 +7,12 @@
 // * The comparison must be done using a function named `longest`
 // * No data may be copied (cannot use .to_owned() or .to_string())
 // * If both strings are the same length, the first one should be returned
-
+fn longest<'a>(car: &'a str, cdr: &'a str) -> &'a str {
+    match car.len() > cdr.len() {
+        true => car,
+        false => cdr,
+    }
+}
 fn main() {
     let short = "hello";
     let long = "this is a long message";

@@ -49,11 +49,11 @@ impl Cost for Wood {
 // * Process at least 3 different materials
 
 fn main() {
-    let wood = &Wood {area: 10.0};
-    let tile = &Tile {area: 60.};
-    let carpet = &Carpet {area: 50.0};
-    let materials: Vec<&dyn Cost> = vec![wood, tile, carpet];
-    let cost: f64 = materials.iter().map(|&x| x.get_cost()).sum();
+    let wood = Wood {area: 10.0};
+    let tile = Tile {area: 60.};
+    let carpet = Carpet {area: 50.0};
+    let materials: Vec<&dyn Cost> = vec![&wood, &tile, &carpet];
+    let cost: f64 = materials.iter().map(|x| x.get_cost()).sum();
     println!("{:?}", cost);
 
 }

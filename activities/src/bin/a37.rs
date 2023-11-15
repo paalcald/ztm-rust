@@ -22,10 +22,41 @@
 // * Utilize the `thiserror` crate for your error type
 // * Run `cargo test --bin a37` to test your implementation
 
+use std::{convert::{TryFrom, TryInto}, num::ParseIntError};
+
+use thiserror::Error;
+
 #[derive(Debug, Eq, PartialEq)]
 struct Rgb(u8, u8, u8);
+#[derive(Debug, Error)]
+enum ParseRgbError {
+    #[error("Missing #")]
+    MissingHash,
+    #[error("must have 6 hexadecimal values")]
+    UnvalidLength,
+    #[error("unvalid hexadecimal value")]
+    UnvalidHex(#[from] ParseIntError),
+}
+impl TryFrom<&str> for Rgb {
+    type Error = ParseRgbError;
+    fn try_from(value: &str) -> Result<Self, Self::Error> {
+        if !value.starts_with('#')  {
+            return Err(Self::Error::MissingHash);
+        }
+        if value.len() != 7 {
+            return Err(Self::Error::UnvalidLength);
+        }
+        let red = u8::from_str_radix(&value[1..=2], 16)?;
+        let green = u8::from_str_radix(&value[3..=4], 16)?;
+        let blue = u8::from_str_radix(&value[5..=6], 16)?;
+        Ok(Rgb(red, green, blue))
+    }
+}
 
 fn main() {
+    let orange = "#6453a3";
+    let rgb: Rgb = orange.try_into().expect("fuck");
+    println!("{:?}", rgb);
     // Use `cargo test --bin a37` to test your implementation
 }
 

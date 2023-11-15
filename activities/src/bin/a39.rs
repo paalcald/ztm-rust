@@ -20,12 +20,14 @@
 // * Disconnection can be accomplished by dropping the sender, or
 //   by telling the thread to self-terminate
 // * Use `cargo test --bin a39` to test your program to ensure all cases are covered
-
+use colored::*;
 use crossbeam_channel::{unbounded, Receiver};
 use std::thread::{self, JoinHandle};
 
 enum LightMsg {
     // Add additional variants needed to complete the exercise
+    TurnOn,
+    TurnOff,
     ChangeColor(u8, u8, u8),
     Disconnect,
 }
@@ -37,9 +39,44 @@ enum LightStatus {
 
 fn spawn_light_thread(receiver: Receiver<LightMsg>) -> JoinHandle<LightStatus> {
     // Add code here to spawn a thread to control the light bulb
+    thread::spawn(move || {
+        let mut light_status = LightStatus::Off;
+        while let Ok(light_msg) = receiver.recv() {
+            match light_msg {
+                LightMsg::TurnOn => {
+                    light_status = LightStatus::On;
+                    println!("Light On");
+                },
+                LightMsg::TurnOff => {
+                    light_status = LightStatus::Off;
+                    println!("Light Off");
+                },
+                LightMsg::ChangeColor(red, blue, green) => { 
+                    println!("light changed to: {}", "   ".on_truecolor(red, blue, green));
+                },
+                LightMsg::Disconnect => {
+                    light_status = LightStatus::Off;
+                    break;
+                },
+            }
+        }
+        light_status
+    })
 }
 
-fn main() {}
+fn main() {
+    let (s, r) = unbounded();
+    let light = spawn_light_thread(r);
+
+    // Send various messages to test the interface
+    s.send(LightMsg::TurnOn).expect("thread unreachable");
+    s.send(LightMsg::ChangeColor(123, 45, 21)).expect("thread unreachable");
+    s.send(LightMsg::TurnOff).expect("thread unreachable");
+    s.send(LightMsg::ChangeColor(45, 244, 43)).expect("thread unreachable");
+    s.send(LightMsg::TurnOn).expect("thread unreachable");
+    s.send(LightMsg::Disconnect).expect("thread unreachable");
+    light.join().expect("cant wait");
+}
 
 #[cfg(test)]
 mod test {

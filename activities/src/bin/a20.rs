@@ -50,6 +50,8 @@ fn main() {
     let mut user_input = String::new();
     io::stdin().read_line(&mut user_input).expect("Could not read input.");
     user_input = user_input.trim().to_owned();
-    Command::from_str(user_input)
-        .map_or( println!("invalid power state."),|x| println!("{:?} initiated.", x));
+    match Command::from_str(user_input) {
+        None => println!("invalid power state."),
+        Some(command) => println!("{:?} initiated.", command),
+    }
 }

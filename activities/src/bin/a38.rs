@@ -7,6 +7,7 @@
 //
 // Notes:
 // * Use the join function to wait for threads to finish
+use std::thread;
 
 fn msg_hello() -> &'static str {
     use std::time::Duration;
@@ -26,4 +27,15 @@ fn msg_excited() -> &'static str {
     "!"
 }
 
-fn main() {}
+fn main() {
+    let hello = thread::spawn(move || msg_hello());
+    let thread = thread::spawn(move || msg_thread());
+    let excited = thread::spawn(move || msg_excited());
+    let vector = vec![hello,thread,excited];
+    for item in vector.into_iter() {
+        match item.join() {
+            Ok(string) => print!("{}", string),
+            Err(e) => println!("{:?}",e)
+        }
+    }
+}

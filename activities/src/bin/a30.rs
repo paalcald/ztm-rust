@@ -48,6 +48,7 @@ impl Color for Black {
 
 }
 
+#[allow(dead_code)]
 #[derive(Debug)]
 struct Vehicle<T, U> 
 where 

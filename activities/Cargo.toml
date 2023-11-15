@@ -11,4 +11,8 @@ path = "src/lib/external.rs"
 
 [dependencies]
 chrono = "0.4.31"
+thiserror = "1.0"
+crossbeam-channel = "0.5.8"
+colored = "2"
+parking_lot = "0.12.1"
 
