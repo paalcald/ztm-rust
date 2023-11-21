@@ -30,6 +30,7 @@ impl Score {
             per_iteration: 1,
         }
     }
+    #[allow(dead_code)]
     fn powerup(&mut self) {
         self.per_iteration += 1;
     }

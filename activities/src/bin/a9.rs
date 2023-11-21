@@ -8,17 +8,17 @@
 // * Use a function that returns a tuple
 // * Destructure the return value into two variables
 // * Use an if..else if..else block to determine what to print
+use std::cmp::Ordering;
+
 fn coordinate() -> (i32, i32) {
     (123, 5)
 }
 fn main() {
     let my_point = coordinate();
     let (_, y) = my_point;
-    if y > 5 {
-        println!(">5");
-    } else if y < 5 {
-        println!("<5")
-    } else {
-        println!("=5")
+    match y.cmp(&5) {
+        Ordering::Greater => println!(">5"),
+        Ordering::Less => println!("<5"),
+        Ordering::Equal => println!("=5"),
     }
 }

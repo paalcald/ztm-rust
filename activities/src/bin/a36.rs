@@ -21,6 +21,6 @@ fn main() {
             [a, b] => println!("{}", a + b),
             [single] => println!("Unpaired value: {}", single),
             [] => println!("Data stream complete"),
-            [..] => panic!("chunk size can't be greater than 2")
+            [..] => unreachable!("chunk size shouldn't be greater than 2"),
     }).for_each(drop);
 }

@@ -35,7 +35,7 @@ impl Priority for Guest {
     }
 }
 
-fn display_priority<T> (x: T) -> ()
+fn display_priority<T> (x: T)
 where
     T: Priority + std::fmt::Debug {
     let priority = x.get_priority();

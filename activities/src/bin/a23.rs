@@ -21,13 +21,13 @@ fn part_2() -> Option<Access> {
     // "Root" is equivalent to Access::Admin, but it is
     // not listed in the maybe_access function.
     // Note: Use or_else and root().
-    maybe_access("root").or_else(|| root())
+    maybe_access("root").or_else(root)
 }
 
 fn part_3() -> Access {
     // "Alice" is not a listed user, so she will be a guest.
     // Note: Use unwrap_or_else.
-    maybe_access("Alice").unwrap_or_else(|| Access::Guest)
+    maybe_access("Alice").unwrap_or(Access::Guest)
 }
 #[derive(Debug, Eq, PartialEq)]
 enum Access {

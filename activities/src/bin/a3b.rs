@@ -8,14 +8,12 @@
 // * Use a variable set to any integer value
 // * Use an if..else if..else block to determine which message to display
 // * Use the println macro to display messages to the terminal
-
+use std::cmp::Ordering;
 fn main() {
     let integer = 5;
-    if integer > 5 {
-        println!(">5");
-    } else if integer < 5 {
-        println!("<5");
-    } else {
-        println!("=5");
+    match integer.cmp(&5) {
+        Ordering::Greater => println!(">5"),
+        Ordering::Less => println!("<5"),
+        Ordering::Equal => println!("=5"),
     }
 }

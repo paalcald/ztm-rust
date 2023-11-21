@@ -11,7 +11,7 @@
 //   must be implemented using references/borrows
 
 
-const MOCK_DATA: &'static str = include_str!("mock-data.csv");
+const MOCK_DATA: &str = include_str!("mock-data.csv");
 
 #[allow(dead_code)]
 #[derive(Debug)]
@@ -23,10 +23,10 @@ fn main() {
     let mut people: Vec<PersonPtr> = Vec::new();
     for entry in MOCK_DATA.split('\n').skip(1) {
         let mut entry_fields = entry.split(',');
-        let name = entry_fields.by_ref().skip(1).next();
+        let name = entry_fields.by_ref().nth(1);
         let title = entry_fields.last();
-        if name.is_some() && title.is_some() {
-            people.push(PersonPtr { name: name.unwrap(), title: title.unwrap().trim() });
+        if let (Some(name), Some(title)) = (name, title) {
+            people.push(PersonPtr { name, title: title.trim() });
         }
     }
     for person in people.iter() {

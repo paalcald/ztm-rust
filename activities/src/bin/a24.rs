@@ -9,10 +9,10 @@
 // * Use an iterator chain to accomplish the task.
 
 fn main() {
-    let data = vec![1, 2, 3, 4, 5];
+    let data = [1, 2, 3, 4, 5];
     data.iter()
-        .map(|x| x * &3)
-        .filter(|x| x > &10)
+        .map(|x| x * 3)
+        .filter(|x| *x > 10)
         .map(|x| println!("{x}"))
         .for_each(drop);
 }

@@ -1,0 +1,10 @@
+-------------------------
+%%%% Billing Manager %%%%
+-------------------------
+1) Add new bill.
+2) View existing bills.
+3) Remove existing bill.
+4) Edit existing bill.
+5) Quit.
+-------------------------
+Choose an action:  

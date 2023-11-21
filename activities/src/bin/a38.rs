@@ -28,11 +28,11 @@ fn msg_excited() -> &'static str {
 }
 
 fn main() {
-    let hello = thread::spawn(move || msg_hello());
-    let thread = thread::spawn(move || msg_thread());
-    let excited = thread::spawn(move || msg_excited());
-    let vector = vec![hello,thread,excited];
-    for item in vector.into_iter() {
+    let hello = thread::spawn(msg_hello);
+    let thread = thread::spawn(msg_thread);
+    let excited = thread::spawn(msg_excited);
+    let vector = [hello, thread, excited];
+    for item in vector {
         match item.join() {
             Ok(string) => print!("{}", string),
             Err(e) => println!("{:?}",e)
