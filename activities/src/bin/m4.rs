@@ -17,8 +17,18 @@ macro_rules! get {
     (first $count:literal items from $iterable:expr) => {
         $iterable.iter().take($count)
     };
+    (last $count:literal items from $iterable:expr) => {{
+        let len = $iterable.len();
+        $iterable.iter().skip(len - $count)
+    }};
+    (first item from $iterable:expr) => {
+        $iterable.iter().next()
+    };
+    (last item from $iterable:expr) => {
+        $iterable.iter().last()
+    }
 }
-
+#[allow(unused_variables)]
 fn main() {
     let data = vec![1, 2, 3, 4, 5];
     let first_3: Vec<&i32> = get!(first 3 items from data).collect::<Vec<_>>();

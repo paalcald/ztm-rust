@@ -31,6 +31,23 @@ struct InvestorId(Id);
 struct ManagerId(Id);
 struct VendorId(Id);
 
+macro_rules! impl_deref_id_for {
+    ($type:ty) => {
+        impl Deref for $type {
+            type Target = Id;
+            fn deref(&self) -> &Self::Target {
+                &self.0
+            }
+        }
+    };
+}
+
+impl_deref_id_for!(EmployeeId);
+impl_deref_id_for!(GuestId);
+impl_deref_id_for!(InvestorId);
+impl_deref_id_for!(ManagerId);
+impl_deref_id_for!(VendorId);
+
 impl Deref for ContractorId {
     type Target = Id;
     fn deref(&self) -> &Self::Target {

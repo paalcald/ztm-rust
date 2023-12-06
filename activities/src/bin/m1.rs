@@ -63,17 +63,21 @@ fn is_authorized(user: UserId) -> bool {
         _ => false,
     }
 }
-
+macro_rules! validate_user {
+    ($user:expr) => {{
+        if !account_is_active($user) {
+            return Err(ServeError::AccountInactive);
+        }
+        if !is_logged_in($user) {
+            return Err(ServeError::NotLoggedIn);
+        }
+        if !is_authorized($user) {
+            return Err(ServeError::Unauthorized);
+        }
+    }};
+}
 fn get_data<T: Into<Vec<u8>>>(resource: T, user: UserId) -> Result<Vec<u8>, ServeError> {
-    if !account_is_active(user) {
-        return Err(ServeError::AccountInactive);
-    }
-    if !is_logged_in(user) {
-        return Err(ServeError::NotLoggedIn);
-    }
-    if !is_authorized(user) {
-        return Err(ServeError::Unauthorized);
-    }
+    validate_user!(user);
     Ok(resource.into())
 }
 
